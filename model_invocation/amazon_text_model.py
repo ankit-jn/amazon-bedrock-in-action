@@ -10,10 +10,10 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
 MODEL_ID_TITAN = "amazon.titan-text-express-v1"
 
 # Inference Parameters Default Values
-MAX_TOKEN_COUNT = "512"
-STOP_SEQUENCES = []
 TEMPERATURE = "0.9"
 TOP_P = "1.0"
+MAX_TOKEN_COUNT = "512"
+STOP_SEQUENCES = []
 
 class AmazonTextModel:
     """
@@ -72,14 +72,13 @@ class AmazonTextModel:
     def prepare_input(self):
         self.model_id = input('Please input modelId [amazon.titan-text-express-v1]: ').strip() or MODEL_ID_TITAN
 
+        self.temperature = float(input('Please input temperature [0.9]: ').strip() or TEMPERATURE)
+        self.top_p = float(input('Please input topP [1.0]: ').strip() or TOP_P)
         self.max_token_input = int(input('Please input maxTokenCount [512]: ').strip() or MAX_TOKEN_COUNT)
         self.stop_sequences = (input('Please comma seperated input stopSequences [None]: ').strip() or STOP_SEQUENCES)
         if type(self.stop_sequences) == str:
             self.stop_sequences = self.stop_sequences.split(",")
         
-        self.temperature = float(input('Please input temperature [0.9]: ').strip() or TEMPERATURE)
-        self.top_p = float(input('Please input topP [1.0]: ').strip() or TEMPERATURE)
-
         self.prompt = input('Please input Question [Why do we dream?]: ').strip() or "Why do we dream?"
 
     def invoke_titan_model(self):
