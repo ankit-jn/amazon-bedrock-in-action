@@ -81,7 +81,7 @@ class AmazonTextModel:
         
         self.prompt = input('Please input Question [Why do we dream?]: ').strip() or "Why do we dream?"
 
-    def invoke_titan_model(self):
+    def process(self):
         """
         Invoke Amazon Titan Text Model
         """
@@ -109,7 +109,7 @@ class AmazonTextModel:
             contentType="application/json",
         )
 
-        ### Process Response
+        ### Read Response
         response = json.loads(output["body"].read())
 
         error = response.get("error")

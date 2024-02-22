@@ -6,6 +6,7 @@ from utils.exception_handler import BedrockException
 
 from list_models import FoundationModels
 from model_invocation.amazon_text_model import AmazonTextModel
+from model_invocation.anthropic_text_model import AnthropicTextModel
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -28,7 +29,23 @@ def test_amazon_titan():
 
     try:
         titan = AmazonTextModel(bedrock_client=runtime_client)
-        titan.invoke_titan_model()
+        titan.process()
+    except ClientError as err:
+        err_msg = err.response["Error"]["Message"]
+        logger.error(f"Client Error: {err_msg}")
+    except BedrockException as err:
+        logger.error(err.message)
+    else:
+        logger.info("Processign Done!!!")
+
+def test_anthropic_claude(streaming=False):
+    """
+    Initiator for Testing Anthropic Claude Text Model
+    """
+
+    try:
+        claude = AnthropicTextModel(bedrock_client=runtime_client)
+        claude.process(streaming)
     except ClientError as err:
         err_msg = err.response["Error"]["Message"]
         logger.error(f"Client Error: {err_msg}")
@@ -62,7 +79,8 @@ def choice_option():
     print("1. List all the models")
     print("2. Test Amazon Titan Text Model")
     print("3. Test Anthropic Claude Text Model")
-    print("4. Exit")
+    print("4. Test Anthropic Claude Text Model (with streaming)")
+    print("99. Exit")
     valid = False
     while not valid:
         choice = input("Please select option: ").strip()
@@ -79,11 +97,15 @@ def choice_option():
 def main():
     choice = choice_option()
 
-    while choice != 4:
+    while choice != 99:
         if choice == 1:
             list_models()
         elif choice == 2:
             test_amazon_titan()
+        elif choice == 3:
+            test_anthropic_claude()
+        elif choice == 4:
+            test_anthropic_claude(streaming=True)
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
