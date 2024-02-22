@@ -36,10 +36,12 @@ class AnthropicTextModel:
     --> Inference parameters: To control the Model Responses
 
     1. temperature:
-    The amount of randomness injected into the response. It is defaulted to 1. The range is from 0 to 1. Value closer to 0 results into analytical / multiple choice, and closer to 1 results into creative and generative tasks.
+    The amount of randomness injected into the response. It is defaulted to 1. The range is from 0 to 1. 
+    Value closer to 0 results into analytical / multiple choice, and closer to 1 results into creative and generative tasks.
 
     2. top_p:
-    With nucleus sampling, Anthropic Claude computes the cumulative distribution over all the options for each subsequent token in decreasing probability order and cuts it off once it reaches a particular probability specified by top_p. (defaults to 1, range 0-1).
+    With nucleus sampling, Anthropic Claude computes the cumulative distribution over all the options for each subsequent token 
+    in decreasing probability order and cuts it off once it reaches a particular probability specified by top_p. (defaults to 1, range 0-1).
     Either us temperature or top_p, but not both.
 
     3. top_k:
@@ -118,9 +120,10 @@ class AnthropicTextModel:
                 contentType="application/json",)
             
             ## Read Response
-            stream_response = output.get("body")
-            if stream_response:
-                for event in stream_response:
-                    chunk = event.get("chunk")
-                    if chunk:
-                        logger.info(json.loads(chunk.get("bytes").decode()))
+            response_stream = output.get("body")
+
+            ## Process Stream
+            for event in response_stream:
+                chunk = event.get("chunk")
+                data = json.loads(chunk.get("bytes").decode())
+                logger.info(f"Completion: {data["cmpletion"]}")

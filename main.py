@@ -22,14 +22,14 @@ control_client = session.client("bedrock")
 runtime_client = session.client("bedrock-runtime")
 
 
-def test_amazon_titan():
+def test_amazon_titan(streaming=False):
     """
     Initiator for Testing Amazon Titan Text Model
     """
 
     try:
         titan = AmazonTextModel(bedrock_client=runtime_client)
-        titan.process()
+        titan.process(streaming)
     except ClientError as err:
         err_msg = err.response["Error"]["Message"]
         logger.error(f"Client Error: {err_msg}")
@@ -78,8 +78,9 @@ def choice_option():
     print("------------ Gen AI Hands-on ------------")
     print("1. List all the models")
     print("2. Test Amazon Titan Text Model")
-    print("3. Test Anthropic Claude Text Model")
-    print("4. Test Anthropic Claude Text Model (with streaming)")
+    print("3. Test Amazon Titan Text Model (with streaming)")
+    print("4. Test Anthropic Claude Text Model")
+    print("5. Test Anthropic Claude Text Model (with streaming)")
     print("99. Exit")
     valid = False
     while not valid:
@@ -103,8 +104,10 @@ def main():
         elif choice == 2:
             test_amazon_titan()
         elif choice == 3:
-            test_anthropic_claude()
+            test_amazon_titan(streaming=True)
         elif choice == 4:
+            test_anthropic_claude()
+        elif choice == 5:
             test_anthropic_claude(streaming=True)
         else:
             print(

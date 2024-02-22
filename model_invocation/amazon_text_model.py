@@ -81,7 +81,7 @@ class AmazonTextModel:
         
         self.prompt = input('Please input Question [Why do we dream?]: ').strip() or "Why do we dream?"
 
-    def process(self):
+    def process(self, streaming = False):
         """
         Invoke Amazon Titan Text Model
         """
@@ -101,23 +101,39 @@ class AmazonTextModel:
             )
         )
 
-        ### Invoke Foundation Model
-        output = self.bedrock_client.invoke_model(
-            body=input,
-            modelId=self.model_id,
-            accept="application/json",
-            contentType="application/json",
-        )
+        if not streaming:
+            ### Invoke Foundation Model
+            output = self.bedrock_client.invoke_model(
+                body=input,
+                modelId=self.model_id,
+                accept="application/json",
+                contentType="application/json",
+            )
 
-        ### Read Response
-        response = json.loads(output["body"].read())
+            ### Read Response
+            response = json.loads(output["body"].read())
 
-        error = response.get("error")
-        if error is not None:
-            raise BedrockException(f"Text Generation Error: {error}")
-        
-        logger.info(f"Input text Token Count: {response["inputTextTokenCount"]}")
-        for result in response["results"]:
-            logger.info(f"Token Count: {result["tokenCount"]}")
-            logger.info(f"Output text: {result["outputText"]}")
-            logger.info(f"Completion Reason: {result["completionReason"]}")
+            error = response.get("error")
+            if error is not None:
+                raise BedrockException(f"Text Generation Error: {error}")
+            
+            logger.info(f"Input text Token Count: {response["inputTextTokenCount"]}")
+            for result in response["results"]:
+                logger.info(f"Token Count: {result["tokenCount"]}")
+                logger.info(f"Output text: {result["outputText"]}")
+                logger.info(f"Completion Reason: {result["completionReason"]}")
+        else:
+            output = self.bedrock_client.invoke_model_with_response_stream(
+                body=input,
+                modelId=self.model_id,
+                accept = "application/json",
+                contentType="application/json"
+            )
+
+            response_stream = output.get("body")
+            
+            ## Process Stream
+            for event in response_stream:
+                chunk = event.get("chunk")
+                data = json.loads(chunk.get("bytes"))
+                logger.info(f"Output Text: {data["outputText"]}")
