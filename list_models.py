@@ -1,21 +1,23 @@
 import boto3
 import json
+import logging
 
-def main():
-    ## Creating session with AWS profile
-    session = boto3.Session(profile_name="bedrock-profile")
+from botocore.exceptions import ClientError
 
-    ## bedrock – Contains control plane APIs for managing, training, and deploying models. 
-    bedrock_client = session.client("bedrock")
+## Instantiate Logger
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
 
-    ## List all the foundation models deployed with Amazon Bedrock
-    model_list = bedrock_client.list_foundation_models()
+class FoundationModels:
+    def __init__(self, bedrock_client) -> None:
+        self.bedrock_client = bedrock_client
 
-    ## Count Models
-    counts = len(model_list["modelSummaries"])
-    print(f"Total Models: {counts}")
+    def get_list(self):
+        ## List all the foundation models deployed with Amazon Bedrock
+        model_list = self.bedrock_client.list_foundation_models()
+        ## Count Models
+        counts = len(model_list["modelSummaries"])
+        logger.info(f"Total Models- {counts}")
 
-    ## Print Model Details
-    print(json.dumps(model_list, indent=2))
-
-main()
+        ## Print Model Details
+        logger.info(f"Models-\n {json.dumps(model_list, indent=2)}")
