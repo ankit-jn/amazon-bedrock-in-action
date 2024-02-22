@@ -8,6 +8,7 @@ from botocore.exceptions import ClientError
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
 
+
 class FoundationModels:
     def __init__(self, bedrock_client) -> None:
         self.bedrock_client = bedrock_client
