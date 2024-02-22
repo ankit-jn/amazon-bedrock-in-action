@@ -4,7 +4,7 @@ from utils.exception_handler import BedrockException
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 # Refer Latest documentation for Model Ids based on your use case
 MODEL_ID_TITAN = "amazon.titan-text-express-v1"
@@ -55,15 +55,48 @@ class AmazonTextModel:
 
     --> Request Structure: Json with following propertis
 
-        body: Input data in the format specified in the content-type request header.
-        modelId: Identifier of the foundation model.
-        accept:  The desired MIME type of the inference body in the response.
-        contentType: The MIME type of the input data in the request
+        {
+            "body": string          ## Input data in the format specified in the content-type request header.
+            "modelId": string       ## Identifier of the foundation model.
+            "accept":  string       ## The desired MIME type of the inference body in the response.
+            "contentType": string   ## The MIME type of the input data in the request
+        }
+
+        Request Body
+        {
+            "inputText": string,
+            "textGenerationConfig": {
+                "temperature": float,  
+                "topP": float,
+                "maxTokenCount": int,
+                "stopSequences": [string]
+            }
+        }
 
     --> Response Structure: Json with following properties
 
-        body: Inference response from the model in the format specified in the content-type header field.
-        contentType: The MIME type of the inference result.
+        ## Plain Response
+        {
+            'inputTextTokenCount': int,
+            'results': [{
+                'tokenCount': int,
+                'outputText': '\n<response>\n',
+                'completionReason': string
+            }]
+        }
+
+        ## Stream Response
+        {
+            'chunk': {
+                'bytes': b'{
+                    "index": int,
+                    "inputTextTokenCount": int,
+                    "totalOutputTextTokenCount": int,
+                    "outputText": "<response-chunk>",
+                    "completionReason": string
+                }'
+            }
+        }
 
     """
     def __init__(self, bedrock_client) -> None:
@@ -135,5 +168,5 @@ class AmazonTextModel:
             ## Process Stream
             for event in response_stream:
                 chunk = event.get("chunk")
-                data = json.loads(chunk.get("bytes"))
+                data = json.loads(chunk.get("bytes").decode())
                 logger.info(f"Output Text: {data["outputText"]}")

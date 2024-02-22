@@ -7,6 +7,7 @@ from utils.exception_handler import BedrockException
 from list_models import FoundationModels
 from model_invocation.amazon_text_model import AmazonTextModel
 from model_invocation.anthropic_text_model import AnthropicTextModel
+from model_invocation.meta_text_model import MetaTextModel
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -54,6 +55,22 @@ def test_anthropic_claude(streaming=False):
     else:
         logger.info("Processign Done!!!")
 
+def test_meta_llama2(streaming=False):
+    """
+    Initiator for Testing Meta Llama2 Text Model
+    """
+
+    try:
+        llama2 = MetaTextModel(bedrock_client=runtime_client)
+        llama2.process(streaming)
+    except ClientError as err:
+        err_msg = err.response["Error"]["Message"]
+        logger.error(f"Client Error: {err_msg}")
+    except BedrockException as err:
+        logger.error(err.message)
+    else:
+        logger.info("Processign Done!!!")
+
 
 def list_models():
     """
@@ -81,6 +98,8 @@ def choice_option():
     print("3. Test Amazon Titan Text Model (with streaming)")
     print("4. Test Anthropic Claude Text Model")
     print("5. Test Anthropic Claude Text Model (with streaming)")
+    print("6. Test Meta Llama2 Text Model")
+    print("7. Test Meta Llama2 Text Model (with streaming)")
     print("99. Exit")
     valid = False
     while not valid:
@@ -109,6 +128,10 @@ def main():
             test_anthropic_claude()
         elif choice == 5:
             test_anthropic_claude(streaming=True)
+        elif choice == 6:
+            test_meta_llama2()
+        elif choice == 7:
+            test_meta_llama2(streaming=True)
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."

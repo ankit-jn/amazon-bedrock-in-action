@@ -53,6 +53,34 @@ class AnthropicTextModel:
     4. stop_sequences:
     Sequences that will signal the model to stop generating text.
 
+    
+    --> Request Structure: Json with following propertis
+        {
+            "body": string          ## Input data in the format specified in the content-type request header.
+            "modelId": string       ## Identifier of the foundation model.
+            "accept":  string       ## The desired MIME type of the inference body in the response.
+            "contentType": string   ## The MIME type of the input data in the request
+        }
+
+        Request Body
+        {
+            "prompt": "\n\nHuman:<prompt>\n\nAssistant:",
+            "temperature": float,
+            "top_p": float,
+            "top_k": int,
+            "max_tokens_to_sample": int,
+            "stop_sequences": [string]
+        }
+
+    --> Response Structure: Json with following propertis
+        
+        ## Plain Response
+        {
+            "completion": string,   ## The resulting completion up to and excluding the stop sequences.
+            "stop_reason": string,  ## The reason why the model stopped generating the response. Values: stop_sequence, max_tokens
+            "stop": string          ## contains the stop sequence that signalled the model to stop generating text.
+        }
+
     """
 
     def prepare_input(self):
@@ -64,13 +92,13 @@ class AnthropicTextModel:
         self.temperature = float(
             input("Please input temperature [0.5]: ").strip() or TEMPERATURE
         )
-        self.top_p = float(input("Please input topP [1.0]: ").strip() or TOP_P)
-        self.top_k = int(input("Please input topK [250]: ").strip() or TOP_K)
+        self.top_p = float(input("Please input top_p [1.0]: ").strip() or TOP_P)
+        self.top_k = int(input("Please input top_k [250]: ").strip() or TOP_K)
         self.max_tokens_to_sample = int(
-            input("Please input maxTokenCount [200]: ").strip() or MAX_TOKENS_TO_SAMPLE
+            input("Please input max_tokens_to_sample [200]: ").strip() or MAX_TOKENS_TO_SAMPLE
         )
         self.stop_sequences = (
-            input("Please comma seperated input stopSequences [None]: ").strip()
+            input("Please comma seperated input stop_sequences [None]: ").strip()
             or STOP_SEQUENCES
         )
         if type(self.stop_sequences) == str:
@@ -95,6 +123,7 @@ class AnthropicTextModel:
                 temperature=self.temperature,
                 top_p=self.top_p,
                 top_k=self.top_k,
+                max_tokens_to_sample=self.max_tokens_to_sample,
                 stop_sequences=self.stop_sequences,
                 anthropic_version="bedrock-2023-05-31",
             )
