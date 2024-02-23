@@ -20,10 +20,5 @@ class FoundationModels:
         counts = len(model_list["modelSummaries"])
         logger.info(f"Total Models- {counts}")
 
-        ## Print Model Details
-        # logger.info(f"Models-\n {json.dumps(model_list, indent=2)}")
-
-
-        for model in model_list['modelSummaries']:
-            if model['providerName']=='Meta':
-                print(json.dumps(model, indent=2))
+        # Print Model Details
+        logger.info(f"Models-\n {json.dumps(model_list, indent=2)}")

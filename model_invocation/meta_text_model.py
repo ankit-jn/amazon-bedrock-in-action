@@ -119,7 +119,6 @@ class MetaTextModel:
                 accept = "application/json",
                 contentType = "application/json"
             )
-
             ## Read Response
             response_stream = output.get("body")
 

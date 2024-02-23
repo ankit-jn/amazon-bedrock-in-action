@@ -1,6 +1,5 @@
 import json
 import logging
-from utils.exception_handler import BedrockException
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)

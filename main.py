@@ -8,6 +8,7 @@ from list_models import FoundationModels
 from model_invocation.amazon_text_model import AmazonTextModel
 from model_invocation.anthropic_text_model import AnthropicTextModel
 from model_invocation.meta_text_model import MetaTextModel
+from model_invocation.ai21_text_model import AI21textModel
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -39,6 +40,7 @@ def test_amazon_titan(streaming=False):
     else:
         logger.info("Processign Done!!!")
 
+
 def test_anthropic_claude(streaming=False):
     """
     Initiator for Testing Anthropic Claude Text Model
@@ -55,6 +57,7 @@ def test_anthropic_claude(streaming=False):
     else:
         logger.info("Processign Done!!!")
 
+
 def test_meta_llama2(streaming=False):
     """
     Initiator for Testing Meta Llama2 Text Model
@@ -63,6 +66,23 @@ def test_meta_llama2(streaming=False):
     try:
         llama2 = MetaTextModel(bedrock_client=runtime_client)
         llama2.process(streaming)
+    except ClientError as err:
+        err_msg = err.response["Error"]["Message"]
+        logger.error(f"Client Error: {err_msg}")
+    except BedrockException as err:
+        logger.error(err.message)
+    else:
+        logger.info("Processign Done!!!")
+
+
+def test_ai21_j2():
+    """
+    Initiator for Testing AI21 Jurrasic 2 Text Model
+    """
+
+    try:
+        j2 = AI21textModel(bedrock_client=runtime_client)
+        j2.process()
     except ClientError as err:
         err_msg = err.response["Error"]["Message"]
         logger.error(f"Client Error: {err_msg}")
@@ -100,6 +120,7 @@ def choice_option():
     print("5. Test Anthropic Claude Text Model (with streaming)")
     print("6. Test Meta Llama2 Text Model")
     print("7. Test Meta Llama2 Text Model (with streaming)")
+    print("8. Test AI21 Jurrasic 2 Text Model")
     print("99. Exit")
     valid = False
     while not valid:
@@ -132,6 +153,8 @@ def main():
             test_meta_llama2()
         elif choice == 7:
             test_meta_llama2(streaming=True)
+        elif choice == 8:
+            test_ai21_j2()
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
