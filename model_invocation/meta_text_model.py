@@ -17,6 +17,7 @@ MAX_GEN_LEN = "512"
 class MetaTextModel:
     """
     --> Meta text models:
+    
     Llama 2 is a high-performance, auto-regressive language model designed for developers. 
     It uses an optimized transformer architecture and pretrained models are trained on 2 trillion tokens with a 4k context length.
     It is intended for commercial and research use in English. Fine-tuned chat models are intended for chat based applications.

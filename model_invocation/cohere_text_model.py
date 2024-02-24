@@ -19,7 +19,7 @@ RETURN_LIKELIHOODS = "NONE"
 
 class CohereTextModel:
     """
-    --> Amazon text models:
+    --> Cohere text models:
 
     1. cohere.command-light-text-v14:
     2. cohere.command-text-v14: 
@@ -36,7 +36,7 @@ class CohereTextModel:
         2. p:
         bedrock.helpPanel.cohereRandomDiversity.listP (defaults to 0.01, range: 0.01-0.99)
 
-        2. k
+        3. k
         Ensures only the top k most likely tokens are considered for generation at each step. (defaults to 0, range: 0-500)
 
     B. Length
@@ -48,10 +48,11 @@ class CohereTextModel:
         Used to make the model stop at a desired point, such as the end of a sentence or a list.
         The returned response will not contain the stop sequence. (defaults to blank)
 
-        2. return_likelihoods:
-        Used to make the model stop at a desired point, such as the end of a sentence or a list.
-        The returned response will not contain the stop sequence. (defaults to blank)
-
+        3. return_likelihoods:
+        Specify how and if the token likelihoods are returned with the response. 
+            GENERATION: Only return likelihoods for generated tokens.
+            ALL: Return likelihoods for all tokens.
+            NONE: (Default) Don't return any likelihoods.
         
     --> Request Structure: Json with following propertis
 
@@ -128,7 +129,7 @@ class CohereTextModel:
 
     def process(self, streaming = False):
         """
-        Invoke Amazon Titan Text Model
+        Invoke Cohere Command Text Model
         """
         ## Collect user Inputs
         self.prepare_input()

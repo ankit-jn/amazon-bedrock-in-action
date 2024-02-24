@@ -21,7 +21,7 @@ FREQUENCY_PENALTY = 0
 
 class AI21textModel:
     """
-    --> Amazon text models:
+    --> AI21 text models:
 
     1. ai21.j2-ultra
     2. ai21.j2-mid

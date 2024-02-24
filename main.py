@@ -10,6 +10,7 @@ from model_invocation.anthropic_text_model import AnthropicTextModel
 from model_invocation.meta_text_model import MetaTextModel
 from model_invocation.ai21_text_model import AI21textModel
 from model_invocation.cohere_text_model import CohereTextModel
+from model_invocation.stability_image_model import StabilityDiffusionImageGenerator
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -108,6 +109,22 @@ def test_cohere_command(streaming=False):
     else:
         logger.info("Processign Done!!!")
 
+def test_sdxl():
+    """
+    Initiator for Testing Stability Diffusion Image Model
+    """
+
+    try:
+        sdxl = StabilityDiffusionImageGenerator(bedrock_client=runtime_client)
+        sdxl.process()
+    except ClientError as err:
+        err_msg = err.response["Error"]["Message"]
+        logger.error(f"Client Error: {err_msg}")
+    except BedrockException as err:
+        logger.error(err.message)
+    else:
+        logger.info("Processign Done!!!")
+
 
 def list_models():
     """
@@ -140,6 +157,8 @@ def choice_option():
     print("8. Test AI21 Jurrasic 2 Text Model")
     print("9. Test Cohere Command Text Model")
     print("10. Test Cohere Command Text Model (with streaming)")
+    print("11. Test Stability Diffusion Image Generator Model")
+
     print("99. Exit")
     valid = False
     while not valid:
@@ -178,6 +197,8 @@ def main():
             test_cohere_command()
         elif choice == 10:
             test_cohere_command(streaming=True)
+        elif choice == 11:
+            test_sdxl()
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
