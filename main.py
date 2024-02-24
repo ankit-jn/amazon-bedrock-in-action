@@ -9,6 +9,7 @@ from model_invocation.amazon_text_model import AmazonTextModel
 from model_invocation.anthropic_text_model import AnthropicTextModel
 from model_invocation.meta_text_model import MetaTextModel
 from model_invocation.ai21_text_model import AI21textModel
+from model_invocation.cohere_text_model import CohereTextModel
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -91,6 +92,22 @@ def test_ai21_j2():
     else:
         logger.info("Processign Done!!!")
 
+def test_cohere_command(streaming=False):
+    """
+    Initiator for Testing AI21 Jurrasic 2 Text Model
+    """
+
+    try:
+        j2 = CohereTextModel(bedrock_client=runtime_client)
+        j2.process(streaming)
+    except ClientError as err:
+        err_msg = err.response["Error"]["Message"]
+        logger.error(f"Client Error: {err_msg}")
+    except BedrockException as err:
+        logger.error(err.message)
+    else:
+        logger.info("Processign Done!!!")
+
 
 def list_models():
     """
@@ -121,6 +138,8 @@ def choice_option():
     print("6. Test Meta Llama2 Text Model")
     print("7. Test Meta Llama2 Text Model (with streaming)")
     print("8. Test AI21 Jurrasic 2 Text Model")
+    print("9. Test Cohere Command Text Model")
+    print("10. Test Cohere Command Text Model (with streaming)")
     print("99. Exit")
     valid = False
     while not valid:
@@ -155,6 +174,10 @@ def main():
             test_meta_llama2(streaming=True)
         elif choice == 8:
             test_ai21_j2()
+        elif choice == 9:
+            test_cohere_command()
+        elif choice == 10:
+            test_cohere_command(streaming=True)
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
