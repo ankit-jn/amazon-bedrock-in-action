@@ -14,7 +14,7 @@ TEMPERATURE = "0.5"
 TOP_P = "0.9"
 MAX_GEN_LEN = "512"
 
-class MetaTextModel:
+class MetaLlama2TextGenerator:
     """
     --> Meta text models:
     

@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from utils.exception_handler import BedrockException
 
 ## Instantiate Logger
@@ -15,7 +16,7 @@ TOP_P = "1.0"
 MAX_TOKEN_COUNT = "512"
 STOP_SEQUENCES = []
 
-class AmazonTextModel:
+class AmazonTitanTextGenerator:
     """
     --> Amazon text models:
 
@@ -169,4 +170,5 @@ class AmazonTextModel:
             for event in response_stream:
                 chunk = event.get("chunk")
                 data = json.loads(chunk.get("bytes").decode())
-                logger.info(f"Output Text: {data["outputText"]}")
+                logger.info(data["outputText"])
+                time.sleep(2)

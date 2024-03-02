@@ -19,7 +19,7 @@ COUNT_PENALTY = 0
 FREQUENCY_PENALTY = 0
 
 
-class AI21textModel:
+class AI21Jurassic2TextGenerator:
     """
     --> AI21 text models:
 

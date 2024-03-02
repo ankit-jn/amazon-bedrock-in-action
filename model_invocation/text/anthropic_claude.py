@@ -16,7 +16,7 @@ MAX_TOKENS_TO_SAMPLE = "200"
 STOP_SEQUENCES = []
 
 
-class AnthropicTextModel:
+class AnthropicClaudeTextGenerator:
 
     def __init__(self, bedrock_client) -> None:
         self.bedrock_client = bedrock_client

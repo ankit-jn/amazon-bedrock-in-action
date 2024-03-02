@@ -17,7 +17,7 @@ MAX_TOKENS = "400"
 STOP_SEQUENCES = []
 RETURN_LIKELIHOODS = "NONE"
 
-class CohereTextModel:
+class CohereCommandTextGenerator:
     """
     --> Cohere text models:
 

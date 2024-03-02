@@ -14,6 +14,8 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 MODEL_ID_COMMAND = "stability.stable-diffusion-xl-v1"
 
 # Inference Parameters Default Values
+IMG_WIDTH = "1024"
+IMG_HEIGHT = "1024"
 CFG_SCALE = "7"
 SEED = "0"
 STEPS = "50"
@@ -35,19 +37,21 @@ class StabilityDiffusionImageGenerator:
         An array of text prompts to use for generation. Each element is a JSON object that contains a prompt
         and a weight for the prompt.
 
-        2. cfg_scale: Determines how much the final image portrays the prompt. Use a lower number to increase
+        2. width:
+        Width of the image to generate, in pixels, in an increment divible by 64.
+        The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
+        (default: 1024)
+        
+        3. height:
+        Height of the image to generate, in pixels, in an increment divible by 64.
+        The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
+        (default: 1024)
+
+        4. cfg_scale: Determines how much the final image portrays the prompt. Use a lower number to increase
         randomness in the generation. (default to 7, range: 0-35)
 
-        3. clip_guidance_preset:
+        5. clip_guidance_preset:
         Enum: FAST_BLUE, FAST_GREEN, NONE, SIMPLE SLOW, SLOWER, SLOWEST.
-
-        4. height:
-        Height of the image to generate, in pixels, in an increment divible by 64.
-        The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
-
-        5. width:
-        Height of the image to generate, in pixels, in an increment divible by 64.
-        The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
 
         6. sampler:
         The sampler to use for the diffusion process. If this value is omitted, the model automatically selects
@@ -126,6 +130,9 @@ class StabilityDiffusionImageGenerator:
             or MODEL_ID_COMMAND
         )
 
+        self.width = int(input("Please input width [1024]: ").strip() or IMG_WIDTH)
+        self.height = int(input("Please input height [1024]: ").strip() or IMG_HEIGHT)
+
         self.cfg_scale = int(input("Please input cfg_scale [7]: ").strip() or CFG_SCALE)
         self.seed = int(input("Please input seed [0]: ").strip() or SEED)
         self.steps = int(input("Please input steps [50]: ").strip() or STEPS)
@@ -149,13 +156,14 @@ class StabilityDiffusionImageGenerator:
         input = json.dumps(
             dict(
                 text_prompts=[dict(text=self.prompt)],
+                width=self.width,
+                height=self.height,
                 cfg_scale=self.cfg_scale,
                 seed=self.seed,
                 steps=self.steps,
                 style_preset=self.style_preset,
             )
         )
-        print(input)
 
         ### Invoke Foundation Model
         output = self.bedrock_client.invoke_model(
