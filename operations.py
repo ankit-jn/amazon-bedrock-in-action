@@ -38,7 +38,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_amazon_titan_text_generator(self, streaming=False):
+    def generate_text_using_amazon_titan(self, streaming=False):
         """
         Initiator for Testing Amazon Titan Text Model
         """
@@ -54,7 +54,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_anthropic_claude_text_generator(self, streaming=False):
+    def generate_text_using_anthropic_claude(self, streaming=False):
         """
         Initiator for Testing Anthropic Claude Text Model
         """
@@ -70,7 +70,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_meta_llama2_text_generator(self, streaming=False):
+    def generate_text_using_meta_llama2(self, streaming=False):
         """
         Initiator for Testing Meta Llama2 Text Model
         """
@@ -86,7 +86,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_ai21_j2_text_generator(self):
+    def generate_text_using_ai21_jurassic2(self):
         """
         Initiator for Testing AI21 Jurrasic 2 Text Model
         """
@@ -102,7 +102,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_cohere_command_text_generator(self, streaming=False):
+    def generate_text_using_cohere_command(self, streaming=False):
         """
         Initiator for Testing AI21 Jurrasic 2 Text Model
         """
@@ -118,7 +118,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_amazon_titan_image_generator(self):
+    def generate_image_using_amazon_titan(self):
         """
         Initiator for Testing Amazon Titan Image Model
         """
@@ -134,7 +134,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_sdxl_image_generator(self):
+    def generate_image_using_sdxl(self):
         """
         Initiator for Testing Stability Diffusion Image Model
         """
@@ -150,7 +150,7 @@ class Operations:
         else:
             logger.info("Processign Done!!!")
 
-    def test_amazon_titan_embedding(self):
+    def generate_embedding_using_amazon_titan(self):
         """
         Initiator for Testing Amazon Titan Text Model
         """

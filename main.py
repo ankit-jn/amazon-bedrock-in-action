@@ -127,25 +127,25 @@ def text_playground():
 
     while choice != 99:
         if choice == 0:
-            main_menu()
+            return
         elif choice == 1:
-            operations.test_amazon_titan_text_generator()
+            operations.generate_text_using_amazon_titan()
         elif choice == 2:
-            operations.test_amazon_titan_text_generator(streaming=True)
+            operations.generate_text_using_amazon_titan(streaming=True)
         elif choice == 3:
-            operations.test_anthropic_claude_text_generator()
+            operations.generate_text_using_anthropic_claude()
         elif choice == 4:
-            operations.test_anthropic_claude_text_generator(streaming=True)
+            operations.generate_text_using_anthropic_claude(streaming=True)
         elif choice == 5:
-            operations.test_meta_llama2_text_generator()
+            operations.generate_text_using_meta_llama2()
         elif choice == 6:
-            operations.test_meta_llama2_text_generator(streaming=True)
+            operations.generate_text_using_meta_llama2(streaming=True)
         elif choice == 7:
-            operations.test_ai21_j2_text_generator()
+            operations.generate_text_using_ai21_jurassic2()
         elif choice == 8:
-            operations.test_cohere_command_text_generator()
+            operations.generate_text_using_cohere_command()
         elif choice == 9:
-            operations.test_cohere_command_text_generator(streaming=True)
+            operations.generate_text_using_cohere_command(streaming=True)
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
@@ -161,11 +161,11 @@ def image_playground():
 
     while choice != 99:
         if choice == 0:
-            main_menu()
+            return
         elif choice == 1:
-            operations.test_amazon_titan_image_generator()
+            operations.generate_image_using_amazon_titan()
         elif choice == 2:
-            operations.test_sdxl_image_generator()
+            operations.generate_image_using_sdxl()
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
@@ -181,9 +181,9 @@ def embedding_playground():
 
     while choice != 99:
         if choice == 0:
-            main_menu()
+            return
         elif choice == 1:
-            operations.test_amazon_titan_embedding()
+            operations.generate_embedding_using_amazon_titan()
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."
