@@ -9,6 +9,32 @@ MODEL_ID_TITAN = "amazon.titan-embed-g1-text-02"
 
 
 class AmazonTitanEmbeddeing:
+    """
+    --> Amazon Titan Embedding models:
+
+    1. amazon.titan-embed-g1-text-02:
+
+    --> Request Structure: Json with following propertis
+
+        {
+            "body": string          ## Input data in the format specified in the content-type request header.
+            "modelId": string       ## Identifier of the foundation model.
+            "accept":  string       ## The desired MIME type of the inference body in the response.
+            "contentType": string   ## The MIME type of the input data in the request
+        }
+
+        Request Body
+        {
+            "inputText": string
+        }
+
+    --> Response Structure: Json with following properties
+
+        {
+            "embedding": [float, float, ...],   ## An array that represents the vector of embeddings
+            "inputTextTokenCount": int          ## The number of tokens in the input.
+        }
+    """
 
     def __init__(self, bedrock_client) -> None:
         self.bedrock_client = bedrock_client
@@ -26,6 +52,9 @@ class AmazonTitanEmbeddeing:
         )
 
     def process(self):
+        """
+        Generate a embeddings vector for a text input
+        """
         ## Prepare the input for model invocation
         self.prepare_input()
 

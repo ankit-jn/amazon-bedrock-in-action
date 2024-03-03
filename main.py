@@ -82,6 +82,7 @@ def embedding_playground_menu():
     print("------------ Select the Embedding Model ------------")
     print("0. Return to Main Menu")
     print("1. Test Amazon Titan Embedding Model")
+    print("2. Test Cohere Embedding Model")
     print("99. Exit")
 
     valid = False
@@ -184,6 +185,8 @@ def embedding_playground():
             return
         elif choice == 1:
             operations.generate_embedding_using_amazon_titan()
+        elif choice == 2:
+            operations.generate_embedding_using_cohere()
         else:
             print(
                 "Looks like you have not choosen available options. Please try again."

@@ -12,6 +12,7 @@ from model_invocation.text.cohere_command import CohereCommandTextGenerator
 from model_invocation.image.stability_diffusion import StabilityDiffusionImageGenerator
 from model_invocation.image.amazon_titan import AmazonTitanImageGenerator
 from model_invocation.embedding.amazon_titan import AmazonTitanEmbeddeing
+from model_invocation.embedding.cohere import CohereEmbeddeing
 
 ## Instantiate Logger
 logger = logging.getLogger(__name__)
@@ -152,12 +153,28 @@ class Operations:
 
     def generate_embedding_using_amazon_titan(self):
         """
-        Initiator for Testing Amazon Titan Text Model
+        Initiator for Testing Amazon Titan Embedding
         """
 
         try:
             titan = AmazonTitanEmbeddeing(bedrock_client=self.runtime_client)
             titan.process()
+        except ClientError as err:
+            err_msg = err.response["Error"]["Message"]
+            logger.error(f"Client Error: {err_msg}")
+        except BedrockException as err:
+            logger.error(err.message)
+        else:
+            logger.info("Processign Done!!!")
+
+    def generate_embedding_using_cohere(self):
+        """
+        Initiator for Testing Cohere Embedding
+        """
+
+        try:
+            cohere = CohereEmbeddeing(bedrock_client=self.runtime_client)
+            cohere.process()
         except ClientError as err:
             err_msg = err.response["Error"]["Message"]
             logger.error(f"Client Error: {err_msg}")
