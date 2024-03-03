@@ -22,7 +22,7 @@ Access to Foundation Models on Amazon bedrock console. This is a simple step whi
   - How to use [Anthropic Claude FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/text/anthropic_claude.py)?
   - How to use [Cohere Command FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/text/cohere_command.py)?
   - How to use [A21 Labs Jurassic2 FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/text/ai21_jurassic.py)?
-  - How to use [Meta Llama2 FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/text/meta_llama2.py) Text Model?
+  - How to use [Meta Llama2 FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/text/meta_llama2.py)?
 - Image Generation
   - How to use [Amazon Titan FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/image/amazon_titan.py)?
   - How to use [Stability Diffusion FM](https://github.com/ankit-jn/amazon-bedrock-in-action/blob/main/model_invocation/image/stability_diffusion.py)?
