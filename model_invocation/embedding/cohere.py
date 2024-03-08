@@ -9,6 +9,7 @@ MODEL_ID_COHERE = "cohere.embed-english-v3"
 
 INPUT_TYPE = "classification"
 TRUNCATE_HANDLING = "NONE"
+DEFAULT_PROMPT = "Why do we dream?"
 
 
 class CohereEmbeddeing:
@@ -50,20 +51,20 @@ class CohereEmbeddeing:
 
     def prepare_input(self):
         self.model_id = (
-            input("Please input modelId [cohere.embed-english-v3]: ").strip()
+            input(f"Please input modelId [{MODEL_ID_COHERE}]: ").strip()
             or MODEL_ID_COHERE
         )
         self.input_type = (
-            input("Please input input_type [classification]: ").strip() or INPUT_TYPE
+            input(f"Please input input_type [{INPUT_TYPE}]: ").strip() or INPUT_TYPE
         )
         self.truncate_handling = (
-            input("Please input value for truncate [NONE]: ").strip()
+            input(f"Please input value for truncate [{TRUNCATE_HANDLING}]: ").strip()
             or TRUNCATE_HANDLING
         )
 
         self.prompt = (
-            input("Please input Question [Why do we dream?]: ").strip()
-            or "Why do we dream?"
+            input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip()
+            or DEFAULT_PROMPT
         )
 
     def process(self):

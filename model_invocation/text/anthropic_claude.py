@@ -14,7 +14,7 @@ TOP_P = "1.0"
 TOP_K = "250"
 MAX_TOKENS_TO_SAMPLE = "200"
 STOP_SEQUENCES = []
-
+DEFAULT_PROMPT = "Why do we dream?"
 
 class AnthropicClaudeTextGenerator:
 
@@ -84,28 +84,28 @@ class AnthropicClaudeTextGenerator:
 
     def prepare_input(self):
         self.model_id = (
-            input("Please input modelId [anthropic.claude-v2]: ").strip()
+            input(f"Please input modelId [{MODEL_ID_CLAUDE}]: ").strip()
             or MODEL_ID_CLAUDE
         )
 
         self.temperature = float(
-            input("Please input temperature [0.5]: ").strip() or TEMPERATURE
+            input(f"Please input temperature [{TEMPERATURE}]: ").strip() or TEMPERATURE
         )
-        self.top_p = float(input("Please input top_p [1.0]: ").strip() or TOP_P)
-        self.top_k = int(input("Please input top_k [250]: ").strip() or TOP_K)
+        self.top_p = float(input(f"Please input top_p [{TOP_P}]: ").strip() or TOP_P)
+        self.top_k = int(input(f"Please input top_k [{TOP_K}]: ").strip() or TOP_K)
         self.max_tokens_to_sample = int(
-            input("Please input max_tokens_to_sample [200]: ").strip() or MAX_TOKENS_TO_SAMPLE
+            input(f"Please input max_tokens_to_sample [{MAX_TOKENS_TO_SAMPLE}]: ").strip() or MAX_TOKENS_TO_SAMPLE
         )
         self.stop_sequences = (
-            input("Please comma seperated input stop_sequences [None]: ").strip()
+            input(f"Please comma seperated input stop_sequences [{STOP_SEQUENCES}]: ").strip()
             or STOP_SEQUENCES
         )
         if type(self.stop_sequences) == str:
             self.stop_sequences = self.stop_sequences.split(",")
 
         self.prompt = (
-            input("Please input Question [Why do we dream?]: ").strip()
-            or "Why do we dream?"
+            input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip()
+            or DEFAULT_PROMPT
         )
 
     def process(self, streaming=False):

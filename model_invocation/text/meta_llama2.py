@@ -13,6 +13,7 @@ MODEL_ID_LLAMA = "meta.llama2-13b-chat-v1"
 TEMPERATURE = "0.5"
 TOP_P = "0.9"
 MAX_GEN_LEN = "512"
+DEFAULT_PROMPT = "Why do we dream?"
 
 class MetaLlama2TextGenerator:
     """
@@ -79,13 +80,13 @@ class MetaLlama2TextGenerator:
         self.bedrock_client = bedrock_client
 
     def prepare_input(self):
-        self.model_id = input('Please input modelId [meta.llama2-13b-chat-v1]: ').strip() or MODEL_ID_LLAMA
+        self.model_id = input(f"Please input modelId [{MODEL_ID_LLAMA}]: ").strip() or MODEL_ID_LLAMA
 
-        self.temperature = float(input('Please input temperature [0.5]: ').strip() or TEMPERATURE)
-        self.top_p = float(input('Please input top_p [0.9]: ').strip() or TOP_P)
-        self.max_gen_len = int(input('Please input max_gen_len [512]: ').strip() or MAX_GEN_LEN)
+        self.temperature = float(input(f"Please input temperature [{TEMPERATURE}]: ").strip() or TEMPERATURE)
+        self.top_p = float(input(f"Please input top_p [{TOP_P}]: ").strip() or TOP_P)
+        self.max_gen_len = int(input(f"Please input max_gen_len [{MAX_GEN_LEN}]: ").strip() or MAX_GEN_LEN)
         
-        self.prompt = input('Please input Question [Why do we dream?]: ').strip() or "Why do we dream?"
+        self.prompt = input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip() or DEFAULT_PROMPT
 
     def process(self, streaming = False):
 

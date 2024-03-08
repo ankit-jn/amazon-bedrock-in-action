@@ -17,7 +17,7 @@ STOP_SEQUENCES = []
 PRESENCE_PENALTY = 0
 COUNT_PENALTY = 0
 FREQUENCY_PENALTY = 0
-
+DEFAULT_PROMPT = "Why do we dream?"
 
 class AI21Jurassic2TextGenerator:
     """
@@ -121,36 +121,36 @@ class AI21Jurassic2TextGenerator:
 
     def prepare_input(self):
         self.model_id = (
-            input("Please input modelId [ai21.j2-ultra]: ").strip() or MODEL_ID_J2
+            input(f"Please input modelId [{MODEL_ID_J2}]: ").strip() or MODEL_ID_J2
         )
 
         self.temperature = float(
-            input("Please input temperature [0.7]: ").strip() or TEMPERATURE
+            input(f"Please input temperature [{TEMPERATURE}]: ").strip() or TEMPERATURE
         )
-        self.top_p = float(input("Please input topP [1.0]: ").strip() or TOP_P)
+        self.top_p = float(input(f"Please input topP [{TOP_P}]: ").strip() or TOP_P)
         self.maxTokens = int(
-            input("Please input maxTokens [512]: ").strip() or MAX_TOKENS
+            input(f"Please input maxTokens [{MAX_TOKENS}]: ").strip() or MAX_TOKENS
         )
         self.stop_sequences = (
-            input("Please comma seperated input stopSequences [None]: ").strip()
+            input(f"Please comma seperated input stopSequences [{STOP_SEQUENCES}]: ").strip()
             or STOP_SEQUENCES
         )
         if type(self.stop_sequences) == str:
             self.stop_sequences = self.stop_sequences.split(",")
 
         self.presence_penalty = float(
-            input("Please input presence_penalty [0]: ").strip() or PRESENCE_PENALTY
+            input(f"Please input presence_penalty [{PRESENCE_PENALTY}]: ").strip() or PRESENCE_PENALTY
         )
         self.count_penalty = float(
-            input("Please input count_penalty [0]: ").strip() or COUNT_PENALTY
+            input(f"Please input count_penalty [{COUNT_PENALTY}]: ").strip() or COUNT_PENALTY
         )
         self.frequency_penalty = float(
-            input("Please input frequency_penalty [0]: ").strip() or FREQUENCY_PENALTY
+            input(f"Please input frequency_penalty [{FREQUENCY_PENALTY}]: ").strip() or FREQUENCY_PENALTY
         )
 
         self.prompt = (
-            input("Please input Question [Why do we dream?]: ").strip()
-            or "Why do we dream?"
+            input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip()
+            or DEFAULT_PROMPT
         )
 
     def process(self):

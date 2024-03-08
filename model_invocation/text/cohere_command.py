@@ -16,6 +16,7 @@ TOP_K = "0"
 MAX_TOKENS = "400"
 STOP_SEQUENCES = []
 RETURN_LIKELIHOODS = "NONE"
+DEFAULT_PROMPT = "Why do we dream?"
 
 class CohereCommandTextGenerator:
     """
@@ -114,18 +115,18 @@ class CohereCommandTextGenerator:
         self.bedrock_client = bedrock_client
 
     def prepare_input(self):
-        self.model_id = input('Please input modelId [cohere.command-text-v14]: ').strip() or MODEL_ID_COMMAND
+        self.model_id = input(f"Please input modelId [{MODEL_ID_COMMAND}]: ").strip() or MODEL_ID_COMMAND
 
-        self.temperature = float(input('Please input temperature [0.75]: ').strip() or TEMPERATURE)
-        self.top_p = float(input('Please input p [0.01]: ').strip() or TOP_P)
-        self.top_k = int(input('Please input k [0]: ').strip() or TOP_K)
-        self.max_tokens = int(input('Please input maxTokenCount [400]: ').strip() or MAX_TOKENS)
-        self.stop_sequences = (input('Please comma seperated input stopSequences [None]: ').strip() or STOP_SEQUENCES)
+        self.temperature = float(input(f"Please input temperature [{TEMPERATURE}]: ").strip() or TEMPERATURE)
+        self.top_p = float(input(f"Please input p [{TOP_P}]: ").strip() or TOP_P)
+        self.top_k = int(input(f"Please input k [{TOP_K}]: ").strip() or TOP_K)
+        self.max_tokens = int(input(f"Please input maxTokenCount [{MAX_TOKENS}]: ").strip() or MAX_TOKENS)
+        self.stop_sequences = (input(f"Please comma seperated input stopSequences [{STOP_SEQUENCES}]: ").strip() or STOP_SEQUENCES)
         if type(self.stop_sequences) == str:
             self.stop_sequences = self.stop_sequences.split(",")
-        self.return_likelihoods = input('Please input return_likelihoods [NONE]: ').strip() or RETURN_LIKELIHOODS
+        self.return_likelihoods = input(f"Please input return_likelihoods [{RETURN_LIKELIHOODS}]: ").strip() or RETURN_LIKELIHOODS
         
-        self.prompt = input('Please input Question [Why do we dream?]: ').strip() or "Why do we dream?"
+        self.prompt = input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip() or DEFAULT_PROMPT
 
     def process(self, streaming = False):
         """

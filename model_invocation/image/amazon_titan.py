@@ -21,6 +21,7 @@ SEED = "0"
 IMG_WIDTH = "1024"
 IMG_HEIGHT = "1024"
 NEGATIVE_TEXT = ""
+DEFAULT_PROMOPT = "A boy is playing with dog in the park."
 
 
 class AmazonTitanImageGenerator:
@@ -109,30 +110,33 @@ class AmazonTitanImageGenerator:
 
     def prepare_input(self):
         self.model_id = (
-            input("Please input modelId [amazon.titan-image-generator-v1]: ").strip()
+            input(f"Please input modelId [{MODEL_ID_TITAN}]: ").strip()
             or MODEL_ID_TITAN
         )
-
-        self.img_counts = (
-            int(input("Please input numberOfImages [3]: ").strip() or IMAGE_COUNTS)
+        self.img_counts = int(
+            input(f"Please input numberOfImages [{IMAGE_COUNTS}]: ").strip()
+            or IMAGE_COUNTS
         )
-        self.quality = input("Please input quality [standard]: ").strip() or QUALITY
-        self.width = int(input("Please input width [1024]: ").strip() or IMG_WIDTH)
-        self.height = int(input("Please input height [1024]: ").strip() or IMG_HEIGHT)
+        self.quality = input(f"Please input quality [{QUALITY}]: ").strip() or QUALITY
+        self.width = int(
+            input(f"Please input width [{IMG_WIDTH}]: ").strip() or IMG_WIDTH
+        )
+        self.height = int(
+            input(f"Please input height [{IMG_HEIGHT}]: ").strip() or IMG_HEIGHT
+        )
 
         self.cfg_scale = float(
-            input("Please input cfgScale [8.0]: ").strip() or CFG_SCALE
+            input(f"Please input cfgScale [{CFG_SCALE}]: ").strip() or CFG_SCALE
         )
-        self.seed = int(input("Please input seed [0]: ").strip() or SEED)
+        self.seed = int(input(f"Please input seed [{SEED}]: ").strip() or SEED)
 
         self.prompt = (
-            input(
-                "Please input text [A boy is playing with dog in the park.]: "
-            ).strip()
-            or "A boy is playing with dog in the park."
+            input(f"Please input text [{DEFAULT_PROMOPT}]: ").strip()
+            or DEFAULT_PROMOPT
         )
         self.negative_text = (
-            input("Please input negativeText [None]: ").strip() or NEGATIVE_TEXT
+            input(f"Please input negativeText [{NEGATIVE_TEXT}]: ").strip()
+            or NEGATIVE_TEXT
         )
 
     def process(self):

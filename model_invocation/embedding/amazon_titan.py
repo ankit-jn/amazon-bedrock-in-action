@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 MODEL_ID_TITAN = "amazon.titan-embed-g1-text-02"
+DEFAULT_PROMPT = "Why do we dream?"
 
 
 class AmazonTitanEmbeddeing:
@@ -41,14 +42,12 @@ class AmazonTitanEmbeddeing:
 
     def prepare_input(self):
         self.model_id = (
-            input(
-                "Please input modelId [amazon.amazon.titan-embed-g1-text-02]: "
-            ).strip()
+            input(f"Please input modelId [{MODEL_ID_TITAN}]: ").strip()
             or MODEL_ID_TITAN
         )
         self.prompt = (
-            input("Please input Question [Why do we dream?]: ").strip()
-            or "Why do we dream?"
+            input(f"Please input Question [{DEFAULT_PROMPT}]: ").strip()
+            or DEFAULT_PROMPT
         )
 
     def process(self):

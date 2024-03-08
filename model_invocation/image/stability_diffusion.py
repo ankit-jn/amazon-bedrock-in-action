@@ -20,6 +20,7 @@ CFG_SCALE = "7"
 SEED = "0"
 STEPS = "50"
 STYLE_PRESET = "photographic"
+DEFAULT_PROMOPT = "A boy is playing with dog in the park."
 
 
 class StabilityDiffusionImageGenerator:
@@ -41,7 +42,7 @@ class StabilityDiffusionImageGenerator:
         Width of the image to generate, in pixels, in an increment divible by 64.
         The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
         (default: 1024)
-        
+
         3. height:
         Height of the image to generate, in pixels, in an increment divible by 64.
         The value must be one of 1024x1024, 1152x896, 1216x832, 1344x768, 1536x640, 640x1536, 768x1344, 832x1216, 896x1152.
@@ -126,23 +127,30 @@ class StabilityDiffusionImageGenerator:
 
     def prepare_input(self):
         self.model_id = (
-            input("Please input modelId [stability.stable-diffusion-xl-v1]: ").strip()
+            input(f"Please input modelId [{MODEL_ID_COMMAND}]: ").strip()
             or MODEL_ID_COMMAND
         )
 
-        self.width = int(input("Please input width [1024]: ").strip() or IMG_WIDTH)
-        self.height = int(input("Please input height [1024]: ").strip() or IMG_HEIGHT)
+        self.width = int(
+            input(f"Please input width [{IMG_WIDTH}]: ").strip() or IMG_WIDTH
+        )
+        self.height = int(
+            input(f"Please input height [{IMG_HEIGHT}]: ").strip() or IMG_HEIGHT
+        )
 
-        self.cfg_scale = int(input("Please input cfg_scale [7]: ").strip() or CFG_SCALE)
-        self.seed = int(input("Please input seed [0]: ").strip() or SEED)
-        self.steps = int(input("Please input steps [50]: ").strip() or STEPS)
+        self.cfg_scale = int(
+            input(f"Please input cfg_scale [{CFG_SCALE}]: ").strip() or CFG_SCALE
+        )
+        self.seed = int(input(f"Please input seed [{SEED}]: ").strip() or SEED)
+        self.steps = int(input(f"Please input steps [{STEPS}]: ").strip() or STEPS)
         self.style_preset = (
-            input("Please input style_preset [photographic]: ").strip() or STYLE_PRESET
+            input(f"Please input style_preset [{STYLE_PRESET}]: ").strip()
+            or STYLE_PRESET
         )
 
         self.prompt = (
-            input("Please input Question [A boy is playing with dog in the park.]: ").strip()
-            or "A boy is playing with dog in the park."
+            input(f"Please input Question [{DEFAULT_PROMOPT}]: ").strip()
+            or DEFAULT_PROMOPT
         )
 
     def process(self):
